@@ -1,3 +1,15 @@
+# ============================================================================
+# Zsh Shell Configuration Module for Home Manager
+#
+# This file configures your Zsh shell environment using Home Manager.
+# It is imported from home.nix and manages plugins, aliases, prompt, and more.
+#
+# FILE STRUCTURE OVERVIEW:
+#   zsh.nix   - Zsh shell configuration (plugins, aliases, prompt, etc.)
+#
+# For more info, see: https://nix-community.github.io/home-manager/options.html
+# ============================================================================
+
 {
   config,
   pkgs,
@@ -6,10 +18,16 @@
 }:
 
 {
+  # --------------------------------------------------------------------------
+  # Zsh Program Settings
+  # --------------------------------------------------------------------------
   programs.zsh = {
-    enable = true;
+    enable = true; # Enable Zsh as a managed shell
 
-    # History settings
+    # -------------------
+    # History Settings
+    # -------------------
+    # Configure shell history file, size, and behavior.
     history = {
       path = "${config.home.homeDirectory}/.histfile";
       size = 10000;
@@ -19,23 +37,33 @@
       append = true;
     };
 
-    # Shell options
-    autocd = true;
-    dotDir = ".config/zsh";
+    # -------------------
+    # Shell Options
+    # -------------------
+    autocd = true; # Change directory by typing its name
+    dotDir = ".config/zsh"; # Where Zsh stores its config files
 
-    # Enable zsh plugins managed by Home Manager
-    autosuggestion.enable = true;
-    enableCompletion = true;
-    syntaxHighlighting.enable = true;
-    historySubstringSearch.enable = true;
+    # -------------------
+    # Plugin Management
+    # -------------------
+    # Enable built-in Home Manager Zsh plugins
+    autosuggestion.enable = true; # Suggest completions as you type
+    enableCompletion = true; # Enable tab completion
+    syntaxHighlighting.enable = true; # Syntax highlighting in prompt
+    historySubstringSearch.enable = true; # Search history by substring
 
-    # Shell aliases
+    # -------------------
+    # Shell Aliases
+    # -------------------
     shellAliases = {
-      adhu = "~/Android/Sdk/extras/google/auto/desktop-head-unit";
-      reload = "source ~/.zshrc && zsh";
+      adhu = "~/Android/Sdk/extras/google/auto/desktop-head-unit"; # Example alias
+      reload = "source ~/.zshrc && zsh"; # Reload Zsh config
     };
 
-    # oh-my-zsh integration
+    # -------------------
+    # oh-my-zsh Integration
+    # -------------------
+    # Use oh-my-zsh plugins for extra features and completions.
     oh-my-zsh = {
       enable = true;
       plugins = [
@@ -57,15 +85,18 @@
       ];
     };
 
-    # Additional external plugins
+    # -------------------
+    # Additional External Plugins
+    # -------------------
+    # Add plugins not available in oh-my-zsh or Home Manager by default.
     plugins = [
       {
         name = "zsh-completions";
         src = pkgs.fetchFromGitHub {
           owner = "zsh-users";
           repo = "zsh-completions";
-          rev = "0.34.0"; # Replace with the version you want
-          sha256 = "sha256-qSobM4PRXjfsvoXY6ENqJGI9NEAaFFzlij6MPeTfT0o="; # Replace with the actual hash
+          rev = "0.34.0"; # Plugin version
+          sha256 = "sha256-qSobM4PRXjfsvoXY6ENqJGI9NEAaFFzlij6MPeTfT0o=";
         };
       }
       {
@@ -73,8 +104,8 @@
         src = pkgs.fetchFromGitHub {
           owner = "nix-community";
           repo = "nix-zsh-completions";
-          rev = "0.5.0"; # Replace with the version you want
-          sha256 = "sha256-DKvCpjAeCiUwD5l6PUW7WlEvM0cNZEOk41IiVXoh9D8="; # Replace with the actual hash
+          rev = "0.5.0";
+          sha256 = "sha256-DKvCpjAeCiUwD5l6PUW7WlEvM0cNZEOk41IiVXoh9D8=";
         };
       }
       {
@@ -82,13 +113,16 @@
         src = pkgs.fetchFromGitHub {
           owner = "webyneter";
           repo = "docker-aliases";
-          rev = "master"; # Use specific tag/version when possible
-          sha256 = "sha256-Lh+JtPYRY6GraIBnal9MqWGxhJ4+b6aowSDJkTl1wVE="; # Replace with the actual hash
+          rev = "master"; # Use a specific tag/version if possible
+          sha256 = "sha256-Lh+JtPYRY6GraIBnal9MqWGxhJ4+b6aowSDJkTl1wVE=";
         };
       }
     ];
 
-    # Environment variables
+    # -------------------
+    # Extra Environment Variables
+    # -------------------
+    # You can set extra environment variables here (uncomment as needed).
     envExtra = ''
       # # Go configuration
       # export GOPATH=$HOME/go
@@ -104,78 +138,76 @@
       # export CHROME_EXECUTABLE=/usr/bin/google-chrome-stable
     '';
 
-    # Path additions - can be done with home.sessionVariables.PATH
+    # -------------------
+    # Shell Initialization Content
+    # -------------------
+    # Add custom shell commands to run at shell startup.
     initContent = ''
-      # Load key binding
+      # Set key bindings
       bindkey -e
 
-      # Completion settings
+      # Enable completion cache
       zstyle ':completion:*' use-cache on
 
-      # zstyle for oh-my-zsh
+      # oh-my-zsh update style
       zstyle ':omz:update' mode auto
-      
-      # # Support for dot command
+
+      # # Support for dot command (uncomment if needed)
       # export PATH=".:$PATH"
 
-      # # Skip words with CTRL+arrow
+      # # Skip words with CTRL+arrow (uncomment if needed)
       # bindkey '^[[1;5C' forward-word
       # bindkey '^[[1;5D' backward-word
 
-      # # ASDF configuration
+      # # ASDF configuration (uncomment if you use asdf)
       # export PATH="${config.home.homeDirectory}/.asdf/shims:$PATH"
       # mkdir -p "${config.home.homeDirectory}/.asdf/completions"
       # if command -v asdf &> /dev/null; then
       #   asdf completion zsh > "${config.home.homeDirectory}/.asdf/completions/_asdf"
       # fi
 
-      # # Load ASDF Java home
+      # # Load ASDF Java home (uncomment if you use asdf-java)
       # if [ -f ${config.home.homeDirectory}/.asdf/plugins/java/set-java-home.zsh ]; then
       #   source ${config.home.homeDirectory}/.asdf/plugins/java/set-java-home.zsh
       # fi
 
-      # # Load p10k configuration
+      # # Load p10k configuration (uncomment if you use Powerlevel10k)
       # if [ -f ${config.home.homeDirectory}/.p10k.zsh ]; then
       #   source ${config.home.homeDirectory}/.p10k.zsh
       # fi
 
-      # # bun completions
+      # # bun completions (uncomment if you use bun)
       # if [ -s "${config.home.homeDirectory}/.bun/_bun" ]; then
       #   source "${config.home.homeDirectory}/.bun/_bun"
       # fi
 
-      # # tmux shell settings (these should actually be in tmux config, not zsh)
+      # # tmux shell settings (should be in tmux config, not zsh)
       # if [ -n "$TMUX" ]; then
       #   set -g default-command /bin/zsh
       #   set -g default-shell /bin/zsh
       # fi
 
-      # Add a reload function to reload zsh
+      # Add a reload function to reload zsh config easily
       function reload() {
         source ~/.zshrc && zsh
       }
     '';
   };
 
-  # Configure Powerlevel10k if you want to keep using it
-  # programs.powerlevel10k = {
-  #   enable = true;
-  #   # You might want to add other p10k settings here
-  # };
-
-  # Configure Starship prompt
   programs.starship = {
-    enable = true;
+    enable = true; # Enable Starship prompt
     enableZshIntegration = true;
   };
 
-  # Configure zoxide
   programs.zoxide = {
-    enable = true;
+    enable = true; # Enable zoxide (better cd)
     enableZshIntegration = true;
   };
 
-  # Home path configuration - add all your PATH extensions here
+  # --------------------------------------------------------------------------
+  # PATH Configuration
+  # --------------------------------------------------------------------------
+  # Add custom directories to your PATH here (uncomment as needed).
   home.sessionPath = [
     # "$HOME/flutter/bin"
     # "$HOME/go/bin"

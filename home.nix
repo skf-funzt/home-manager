@@ -1,38 +1,78 @@
+# ============================================================================
+# Home Manager Configuration for stephan
+#
+# This file is the main entry point for your Home Manager setup.
+# It imports other modules (like zsh.nix) and defines global settings,
+# packages, and programs to be managed in your user environment.
+#
+# FILE STRUCTURE OVERVIEW:
+#   home.nix      - Main configuration, imports modules, sets up packages, etc.
+#   zsh.nix       - Zsh shell configuration (imported below)
+#
+# For more info, see: https://nix-community.github.io/home-manager/
+# ============================================================================
+
 { config, pkgs, ... }:
 
 {
+  # --------------------------------------------------------------------------
+  # Module Imports
+  # --------------------------------------------------------------------------
+  # Import additional configuration modules. Each module can configure a specific
+  # aspect of your environment (e.g., zsh, neovim, etc.).
   imports = [
-    ./zsh.nix
-    # Other module imports
+    ./zsh.nix # Zsh shell configuration (see zsh.nix)
+    # Add more modules here as needed
   ];
 
-  # ref: https://fnordig.de/til/nix/home-manager-allow-unfree.html
+  # --------------------------------------------------------------------------
+  # Home Manager Options
+  # --------------------------------------------------------------------------
+  # Enable Home Manager to manage itself and set up auto-expiration for old
+  # generations. This helps keep your configuration clean and up-to-date.
+  # Note: This is optional and can be disabled if you prefer to manage
+  # generations manually.
+  services.home-manager.autoExpire.enable = true;
+
+  # --------------------------------------------------------------------------
+  # Nixpkgs Configuration
+  # --------------------------------------------------------------------------
+  # Allow unfree packages (e.g., proprietary software like Google Chrome).
+  # Also enables zsh program support in nixpkgs.
   nixpkgs = {
     config = {
       allowUnfree = true;
-
       programs.zsh.enabled = true;
     };
   };
 
+  # --------------------------------------------------------------------------
+  # nixGL (OpenGL Wrapper) Configuration
+  # --------------------------------------------------------------------------
+  # These options help run graphical programs with the correct OpenGL drivers
+  # on non-NixOS systems. Only needed if you use GPU-accelerated apps via Nix.
   nixGL.packages = import <nixgl> { inherit pkgs; };
   nixGL.defaultWrapper = "mesa";
-  nixGL.offloadWrapper = "nvidiaPrime";
+  nixGL.offloadWrapper = "mesaPrime";
   nixGL.installScripts = [
     "mesa"
-    "nvidiaPrime"
+    "mesaPrime"
   ];
   nixGL.vulkan.enable = true;
 
+  # --------------------------------------------------------------------------
+  # XDG and Linux Target Settings
+  # --------------------------------------------------------------------------
+  # Enable support for generic Linux and XDG (desktop integration) features.
   targets.genericLinux.enable = true;
   xdg.mime.enable = true;
   xdg.systemDirs.data = [ "${config.home.homeDirectory}/.nix-profile/share/applications" ];
 
-  # The home.activation option allows you to run arbitrary code when activating
-  # your configuration. This is useful for running commands that need to be running
-  # after the configuration is activated. For example, you might want to run
-  # 'update-desktop-database' to update the desktop database after installing
-  # new desktop files.
+  # --------------------------------------------------------------------------
+  # (Optional) Activation Hooks
+  # --------------------------------------------------------------------------
+  # You can run custom commands after activating your configuration.
+  # Example: update the desktop database after installing new apps.
   # home.activation = {
   #   linkDesktopApplications = {
   #     after = [ "writeBoundary" "createXdgUserDirectories" ];
@@ -41,15 +81,17 @@
   #   };
   # };
 
-  # Home Manager needs a bit of information about you and the paths it should
-  # manage.
+  # --------------------------------------------------------------------------
+  # User Information
+  # --------------------------------------------------------------------------
+  # Set your username and home directory. Used by other modules.
   home.username = "stephan";
   home.homeDirectory = "/home/stephan";
 
-  # The cursor theme is used by GTK applications. The default cursor theme is
-  # "DMZ-Black". You can find a list of available cursor themes in
-  # /usr/share/icons. You can also install additional cursor themes using
-  # home.packages.
+  # --------------------------------------------------------------------------
+  # Cursor Theme
+  # --------------------------------------------------------------------------
+  # Configure the mouse cursor theme for GTK applications.
   # ref: https://github.com/ful1e5/bibata
   home.pointerCursor = {
     gtk.enable = true;
@@ -58,36 +100,20 @@
     size = 22;
   };
 
-  # This value determines the Home Manager release that your configuration is
-  # compatible with. This helps avoid breakage when a new Home Manager release
-  # introduces backwards incompatible changes.
-  #
-  # You should not change this value, even if you update Home Manager. If you do
-  # want to update the value, then make sure to first check the Home Manager
-  # release notes.
-  home.stateVersion = "24.11"; # Please read the comment before changing.
+  # --------------------------------------------------------------------------
+  # Home Manager State Version
+  # --------------------------------------------------------------------------
+  # This value should match the Home Manager release you started with.
+  # Only change after reading the release notes!
+  home.stateVersion = "24.11";
 
-  # The home.packages option allows you to install Nix packages into your
-  # environment.
+  # --------------------------------------------------------------------------
+  # Packages
+  # --------------------------------------------------------------------------
+  # List of packages to be installed in your user environment.
+  # You can add, remove, or comment out packages as needed.
   home.packages = [
-    # # Adds the 'hello' command to your environment. It prints a friendly
-    # # "Hello, world!" when run.
-    # pkgs.hello
-
-    # # It is sometimes useful to fine-tune packages, for example, by applying
-    # # overrides. You can do that directly here, just don't forget the
-    # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
-    # # fonts?
-    # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
-
-    # # You can also create simple shell scripts directly inside your
-    # # configuration. For example, this adds a command 'my-hello' to your
-    # # environment:
-    # (pkgs.writeShellScriptBin "my-hello" ''
-    #   echo "Hello, ${config.home.username}!"
-    # '')
-
-    # Misc
+    # Miscellaneous tools
     pkgs.nixfmt-rfc-style
 
     # Fonts
@@ -96,17 +122,13 @@
     pkgs.roboto
     pkgs.noto-fonts
 
-    # Shells
-    # pkgs.bash
-    pkgs.zsh
-
     # Terminal emulator
     pkgs.alacritty
 
     # System tools
     pkgs.tldr
     pkgs.powertop
-    pkgs.btop-rocm # btop with ROCm support to monitor AMD GPUs
+    pkgs.btop-rocm # btop with ROCm support for AMD GPUs
     pkgs.fastfetch
     pkgs.stress
     pkgs.websocat
@@ -115,17 +137,15 @@
     # Conferencing
     pkgs.zoom
 
-    # Tools
-    # pkgs.yubikey-manager-qt # yubikey-manager-qt will be dropped after NixOS 25.05
+    # Security tools
+    # pkgs.yubikey-manager-qt  # Deprecated after NixOS 25.05
     pkgs.yubioath-flutter
 
     # Browsers
     pkgs.google-chrome
-    pkgs.firefox
 
-    # Media
+    # Media players and editors (OpenGL wrapped)
     pkgs.spotify
-    # Media - With OpenGL support
     (config.lib.nixGL.wrap pkgs.vlc)
     (config.lib.nixGL.wrap pkgs.darktable)
     (config.lib.nixGL.wrap pkgs.drawing)
@@ -133,97 +153,83 @@
     (config.lib.nixGL.wrap pkgs.krita)
     (config.lib.nixGL.wrap pkgs.inkscape)
 
-    # Video
+    # Video tools
     pkgs.peek
-    # pkgs.obs-studio # Is setup using the obs-studio module
+    # pkgs.obs-studio  # See obs-studio module below
     (config.lib.nixGL.wrap pkgs.kdePackages.kdenlive)
 
-    # Messangers
+    # Messengers
     pkgs.signal-desktop
     pkgs.discord
     pkgs.ferdium
 
-    # Virtualisation
+    # Virtualization
     pkgs.virtualbox
     # pkgs.vagrant
     # pkgs.snap
     # pkgs.apparmor
-
     pkgs.docker
     # pkgs.docker-compose
     # pkgs.kompose
-
     pkgs.podman
     pkgs.podman-tui
     pkgs.podman-desktop
 
-    # Development
+    # Development tools
     # pkgs.vscode
-    # vscode insiders - ref: https://nixos.wiki/wiki/Visual_Studio_Code#Insiders_Build
+    # See below for VSCode Insiders example
     # (pkgs.vscode.override { isInsiders = true; }).overrideAttrs (oldAttrs: rec {
     #   src = (builtins.fetchTarball {
     #     url = "https://code.visualstudio.com/sha/download?build=insider&os=linux-x64";
     #     sha256 = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
     #   });
     #   version = "latest";
-
     #   buildInputs = oldAttrs.buildInputs ++ [ pkgs.krb5 ];
     # });
   ];
 
-  # Home Manager is pretty good at managing dotfiles. The primary way to manage
-  # plain files is through 'home.file'.
+  # --------------------------------------------------------------------------
+  # Dotfiles and Custom Files
+  # --------------------------------------------------------------------------
+  # Manage your dotfiles or custom config files here.
   home.file = {
-    # # Building this configuration will create a copy of 'dotfiles/screenrc' in
-    # # the Nix store. Activating the configuration will then make '~/.screenrc' a
-    # # symlink to the Nix store copy.
+    # Example: link a custom .screenrc file
     # ".screenrc".source = dotfiles/screenrc;
-
-    # # You can also set the file content immediately.
+    # Example: set content of gradle.properties
     # ".gradle/gradle.properties".text = ''
     #   org.gradle.console=verbose
     #   org.gradle.daemon.idletimeout=3600000
     # '';
   };
 
-  # Home Manager can also manage your environment variables through
-  # 'home.sessionVariables'. These will be explicitly sourced when using a
-  # shell provided by Home Manager. If you don't want to manage your shell
-  # through Home Manager then you have to manually source 'hm-session-vars.sh'
-  # located at either
-  #
-  #  ~/.nix-profile/etc/profile.d/hm-session-vars.sh
-  #
-  # or
-  #
-  #  ~/.local/state/nix/profiles/profile/etc/profile.d/hm-session-vars.sh
-  #
-  # or
-  #
-  #  /etc/profiles/per-user/stephan/etc/profile.d/hm-session-vars.sh
-  #
+  # --------------------------------------------------------------------------
+  # Environment Variables
+  # --------------------------------------------------------------------------
+  # Set environment variables for your user session here.
   home.sessionVariables = {
+    # Example: set default editor
     # EDITOR = "emacs";
   };
 
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
+  # --------------------------------------------------------------------------
+  # Program and Service Modules
+  # --------------------------------------------------------------------------
+  # Enable and configure programs managed by Home Manager.
+  programs.home-manager.enable = true; # Allow Home Manager to manage itself
+  programs.nh.enable = true; # Enable nh (Nix Home) utility
+  programs.vscode.enable = true; # Enable Visual Studio Code
+  programs.firefox.enable = true; # Enable Firefox browser
 
-  # programs.bash.enable = true;
-  programs.zsh.enable = true;
-  programs.starship.enable = true;
-
-  programs.nh.enable= true;
-  programs.vscode.enable = true;
-
+  # Git configuration
   programs.git = {
     enable = true;
     userName = "Stephan Koglin-Fischer";
     userEmail = "stephan.koglin-fischer@funzt.dev";
   };
 
-  programs.direnv.enable = true;
+  programs.direnv.enable = true; # Enable direnv for project-specific envs
 
+  # OBS Studio (video recording/streaming) with OpenGL wrapper
   programs.obs-studio = {
     enable = true;
     package = config.lib.nixGL.wrap pkgs.obs-studio;
