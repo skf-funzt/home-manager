@@ -12,7 +12,7 @@
 # For more info, see: https://nix-community.github.io/home-manager/
 # ============================================================================
 
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   # --------------------------------------------------------------------------
@@ -22,6 +22,7 @@
   # aspect of your environment (e.g., zsh, neovim, etc.).
   imports = [
     ./zsh.nix # Zsh shell configuration (see zsh.nix)
+    # currently not working
     # Add more modules here as needed
   ];
 
@@ -43,6 +44,10 @@
     config = {
       allowUnfree = true;
       programs.zsh.enabled = true;
+
+      # Add myself to the trusted users list for Nixpkgs.
+      # extra-substituters = "https://devenv.cachix.org";
+      # extra-trusted-public-keys = "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=";
     };
   };
 
@@ -51,7 +56,7 @@
   # --------------------------------------------------------------------------
   # These options help run graphical programs with the correct OpenGL drivers
   # on non-NixOS systems. Only needed if you use GPU-accelerated apps via Nix.
-  nixGL.packages = import <nixgl> { inherit pkgs; };
+  nixGL.packages = inputs.nixgl.packages.${pkgs.system};
   nixGL.defaultWrapper = "mesa";
   nixGL.offloadWrapper = "mesaPrime";
   nixGL.installScripts = [
@@ -93,12 +98,20 @@
   # --------------------------------------------------------------------------
   # Configure the mouse cursor theme for GTK applications.
   # ref: https://github.com/ful1e5/bibata
-  home.pointerCursor = {
-    gtk.enable = true;
-    name = "Bibata-Modern-Classic";
-    package = pkgs.bibata-cursors;
-    size = 22;
-  };
+  # home.pointerCursor = {
+  #   gtk.enable = true;
+  #   name = "Bibata-Modern-Classic";
+  #   package = pkgs.bibata-cursors;
+  #   size = 22;
+  # };
+  stylix.enable = true; # Enable Stylix for cursor theme management
+  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/solarflare.yaml";
+  stylix.cursor.name = "Bibata-Modern-Classic";
+  stylix.cursor.package = pkgs.bibata-cursors;
+  stylix.cursor.size = 22;
+
+  stylix.targets.firefox.profileNames = [ "default" ];
+
 
   # --------------------------------------------------------------------------
   # Home Manager State Version
@@ -115,6 +128,7 @@
   home.packages = [
     # Miscellaneous tools
     pkgs.nixfmt-rfc-style
+    pkgs.devenv
 
     # Fonts
     pkgs.fira-code
@@ -123,7 +137,7 @@
     pkgs.noto-fonts
 
     # Terminal emulator
-    pkgs.alacritty
+    (config.lib.nixGL.wrap pkgs.alacritty)
 
     # System tools
     pkgs.tldr
@@ -168,10 +182,10 @@
     # pkgs.vagrant
     # pkgs.snap
     # pkgs.apparmor
-    pkgs.docker
+    # pkgs.docker # This is not supported on non-nixos systems and should be done using the systems package manager - ref: https://nixos.wiki/wiki/Docker#:~:text=for%20further%20options-,Running%20the%20docker%20daemon%20from%20nix%2Dthe%2Dpackage%2Dmanager%20%2D%20not%20NixOS,-This%20is%20not
     # pkgs.docker-compose
     # pkgs.kompose
-    pkgs.podman
+    # pkgs.podman # This is not supported on non-nixos systems and should be done using the systems package manager - ref: https://nixos.wiki/wiki/Docker#:~:text=for%20further%20options-,Running%20the%20docker%20daemon%20from%20nix%2Dthe%2Dpackage%2Dmanager%20%2D%20not%20NixOS,-This%20is%20not
     pkgs.podman-tui
     pkgs.podman-desktop
 
