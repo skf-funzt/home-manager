@@ -12,7 +12,12 @@
 # For more info, see: https://nix-community.github.io/home-manager/
 # ============================================================================
 
-{ config, pkgs, inputs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 
 {
   # --------------------------------------------------------------------------
@@ -105,13 +110,42 @@
   #   size = 22;
   # };
   stylix.enable = true; # Enable Stylix for cursor theme management
-  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/solarflare.yaml";
+  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/eighties.yaml";
   stylix.cursor.name = "Bibata-Modern-Classic";
   stylix.cursor.package = pkgs.bibata-cursors;
   stylix.cursor.size = 22;
+  stylix.iconTheme = {
+    enable = true;
+    package = pkgs.papirus-icon-theme;
+    light = "Papirus-Light";
+    dark = "Papirus-Dark";
+  };
+
+  stylix.polarity = "dark";
+
+  stylix.fonts = {
+    serif = {
+      package = pkgs.noto-fonts;
+      name = "Noto Serif";
+    };
+
+    sansSerif = {
+      package = pkgs.noto-fonts;
+      name = "Noto Sans";
+    };
+
+    monospace = {
+      package = pkgs.hackgen-nf-font;
+      name = "Hack Nerd Font";
+    };
+
+    emoji = {
+      package = pkgs.noto-fonts-color-emoji;
+      name = "Noto Color Emoji";
+    };
+  };
 
   stylix.targets.firefox.profileNames = [ "default" ];
-
 
   # --------------------------------------------------------------------------
   # Home Manager State Version
@@ -128,13 +162,21 @@
   home.packages = [
     # Miscellaneous tools
     pkgs.nixfmt-rfc-style
+    pkgs.nil
+    pkgs.nixd
     pkgs.devenv
 
     # Fonts
     pkgs.fira-code
+    pkgs.nerd-fonts.fira-code
+    pkgs.hackgen-nf-font
     pkgs.powerline-fonts
     pkgs.roboto
     pkgs.noto-fonts
+    pkgs.noto-fonts-color-emoji
+
+    # Icons
+    pkgs.papirus-icon-theme
 
     # Terminal emulator
     (config.lib.nixGL.wrap pkgs.alacritty)
@@ -156,7 +198,7 @@
     pkgs.yubioath-flutter
 
     # Browsers
-    pkgs.google-chrome
+    (config.lib.nixGL.wrap pkgs.google-chrome)
 
     # Media players and editors (OpenGL wrapped)
     pkgs.spotify
@@ -232,7 +274,10 @@
   programs.home-manager.enable = true; # Allow Home Manager to manage itself
   programs.nh.enable = true; # Enable nh (Nix Home) utility
   programs.vscode.enable = true; # Enable Visual Studio Code
-  programs.firefox.enable = true; # Enable Firefox browser
+  programs.firefox = {
+    enable = true;
+    package = config.lib.nixGL.wrap pkgs.firefox;
+  }; # Enable Firefox browser
 
   # Git configuration
   programs.git = {
