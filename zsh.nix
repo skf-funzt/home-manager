@@ -9,15 +9,12 @@
 #
 # For more info, see: https://nix-community.github.io/home-manager/options.html
 # ============================================================================
-
 {
   config,
   pkgs,
   lib,
   ...
-}:
-
-{
+}: {
   # --------------------------------------------------------------------------
   # Zsh Program Settings
   # --------------------------------------------------------------------------
@@ -203,14 +200,13 @@
     # https://nix.dev/manual/nix/2.18/language/builtins#builtins-fromTOML
     # https://starship.rs/presets/gruvbox-rainbow
     # https://starship.rs/installing/#nix
-    # 
-    # 
-    settings = lib.mkForce
+    #
+    #
+    settings =
+      lib.mkForce
       (builtins.fromTOML (
         builtins.readFile "${pkgs.starship}/share/starship/presets/gruvbox-rainbow.toml"
-      ))
-    ;
-
+      ));
   };
 
   programs.zoxide = {

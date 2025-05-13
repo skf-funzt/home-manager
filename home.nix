@@ -11,15 +11,12 @@
 #
 # For more info, see: https://nix-community.github.io/home-manager/
 # ============================================================================
-
 {
   config,
   pkgs,
   inputs,
   ...
-}:
-
-{
+}: {
   # --------------------------------------------------------------------------
   # Module Imports
   # --------------------------------------------------------------------------
@@ -77,7 +74,7 @@
   # Enable support for generic Linux and XDG (desktop integration) features.
   targets.genericLinux.enable = true;
   xdg.mime.enable = true;
-  xdg.systemDirs.data = [ "${config.home.homeDirectory}/.nix-profile/share/applications" ];
+  xdg.systemDirs.data = ["${config.home.homeDirectory}/.nix-profile/share/applications"];
 
   # --------------------------------------------------------------------------
   # (Optional) Activation Hooks
@@ -165,6 +162,7 @@
     pkgs.nixfmt-rfc-style
     pkgs.nil
     pkgs.nixd
+    pkgs.alejandra
     pkgs.devenv
 
     # Fonts
