@@ -68,7 +68,8 @@
     "mesa"
     "mesaPrime"
   ];
-  nixGL.vulkan.enable = true;
+  # ! This setting breaks Gnome 46 completely for X and Wayland
+  # nixGL.vulkan.enable = true;
 
   # --------------------------------------------------------------------------
   # XDG and Linux Target Settings
@@ -109,7 +110,7 @@
   #   package = pkgs.bibata-cursors;
   #   size = 22;
   # };
-  stylix.enable = true; # Enable Stylix for cursor theme management
+  stylix.enable = false; # Enable Stylix for cursor theme management
   stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/eighties.yaml";
   stylix.cursor.name = "Bibata-Modern-Classic";
   stylix.cursor.package = pkgs.bibata-cursors;
@@ -145,7 +146,7 @@
     };
   };
 
-  stylix.targets.firefox.profileNames = [ "default" ];
+  # stylix.targets.firefox.profileNames = [ "default" ];
 
   # --------------------------------------------------------------------------
   # Home Manager State Version
@@ -199,6 +200,7 @@
 
     # Browsers
     (config.lib.nixGL.wrap pkgs.google-chrome)
+    (config.lib.nixGL.wrap pkgs.firefox)
 
     # Media players and editors (OpenGL wrapped)
     pkgs.spotify
@@ -232,7 +234,7 @@
     pkgs.podman-desktop
 
     # Development tools
-    # pkgs.vscode
+    pkgs.vscode
     # See below for VSCode Insiders example
     # (pkgs.vscode.override { isInsiders = true; }).overrideAttrs (oldAttrs: rec {
     #   src = (builtins.fetchTarball {
@@ -242,6 +244,9 @@
     #   version = "latest";
     #   buildInputs = oldAttrs.buildInputs ++ [ pkgs.krb5 ];
     # });
+
+    # Key Tools
+    pkgs.infisical
   ];
 
   # --------------------------------------------------------------------------
@@ -273,11 +278,7 @@
   # Enable and configure programs managed by Home Manager.
   programs.home-manager.enable = true; # Allow Home Manager to manage itself
   programs.nh.enable = true; # Enable nh (Nix Home) utility
-  programs.vscode.enable = true; # Enable Visual Studio Code
-  programs.firefox = {
-    enable = true;
-    package = config.lib.nixGL.wrap pkgs.firefox;
-  }; # Enable Firefox browser
+  # programs.vscode.enable = true; # Enable Visual Studio Code
 
   # Git configuration
   programs.git = {
