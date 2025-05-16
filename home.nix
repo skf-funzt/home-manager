@@ -208,6 +208,7 @@
     (config.lib.nixGL.wrap pkgs.gimp3)
     (config.lib.nixGL.wrap pkgs.krita)
     (config.lib.nixGL.wrap pkgs.inkscape)
+    (config.lib.nixGL.wrap pkgs.blender)
 
     # Video tools
     pkgs.peek
