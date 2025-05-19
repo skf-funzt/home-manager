@@ -14,7 +14,7 @@
 {
   config,
   pkgs,
-  inputs,
+  nixgl,
   ...
 }: {
   # --------------------------------------------------------------------------
@@ -58,12 +58,12 @@
   # --------------------------------------------------------------------------
   # These options help run graphical programs with the correct OpenGL drivers
   # on non-NixOS systems. Only needed if you use GPU-accelerated apps via Nix.
-  nixGL.packages = inputs.nixgl.packages.${pkgs.system};
+  nixGL.packages = nixgl.packages;
   nixGL.defaultWrapper = "mesa";
-  nixGL.offloadWrapper = "mesaPrime";
+  # nixGL.offloadWrapper = "mesaPrime";
   nixGL.installScripts = [
     "mesa"
-    "mesaPrime"
+    # "mesaPrime"
   ];
   # ! This setting breaks Gnome 46 completely for X and Wayland
   # nixGL.vulkan.enable = true;
@@ -107,7 +107,7 @@
   #   package = pkgs.bibata-cursors;
   #   size = 22;
   # };
-  stylix.enable = false; # Enable Stylix for cursor theme management
+  stylix.enable = true; # Enable Stylix for cursor theme management
   stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/eighties.yaml";
   stylix.cursor.name = "Bibata-Modern-Classic";
   stylix.cursor.package = pkgs.bibata-cursors;
@@ -209,6 +209,7 @@
     (config.lib.nixGL.wrap pkgs.krita)
     (config.lib.nixGL.wrap pkgs.inkscape)
     (config.lib.nixGL.wrap pkgs.blender)
+    (config.lib.nixGL.wrap pkgs.obs-studio)
 
     # Video tools
     pkgs.peek
@@ -287,10 +288,4 @@
   };
 
   programs.direnv.enable = true; # Enable direnv for project-specific envs
-
-  # OBS Studio (video recording/streaming) with OpenGL wrapper
-  programs.obs-studio = {
-    enable = true;
-    package = config.lib.nixGL.wrap pkgs.obs-studio;
-  };
 }
