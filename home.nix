@@ -107,7 +107,7 @@
   #   package = pkgs.bibata-cursors;
   #   size = 22;
   # };
-  stylix.enable = true; # Enable Stylix for cursor theme management
+  stylix.enable = false; # Enable Stylix for cursor theme management
   stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/eighties.yaml";
   stylix.cursor.name = "Bibata-Modern-Classic";
   stylix.cursor.package = pkgs.bibata-cursors;
