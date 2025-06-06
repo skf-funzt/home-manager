@@ -150,7 +150,7 @@
   # --------------------------------------------------------------------------
   # This value should match the Home Manager release you started with.
   # Only change after reading the release notes!
-  home.stateVersion = "24.11";
+  home.stateVersion = "25.05";
 
   # --------------------------------------------------------------------------
   # Packages
@@ -197,7 +197,7 @@
     pkgs.yubioath-flutter
 
     # Browsers
-    (config.lib.nixGL.wrap pkgs.google-chrome)
+    (config.lib.nixGL.wrap pkgs.google-chrome) # Chrome works only with the patched version of nixGL from https://github.com/nix-community/nixGL/pull/190
     (config.lib.nixGL.wrap pkgs.firefox)
 
     # Media players and editors (OpenGL wrapped)
@@ -247,6 +247,9 @@
 
     # Key Tools
     pkgs.infisical
+
+    # Management Tools
+    pkgs.logseq
   ];
 
   # --------------------------------------------------------------------------
@@ -288,4 +291,9 @@
   };
 
   programs.direnv.enable = true; # Enable direnv for project-specific envs
+
+  programs.chromium = {
+    enable = true;
+    package = config.lib.nixGL.wrap pkgs.chromium; # Use the Chromium browser package
+  }; # Enable Chromium browser
 }
