@@ -289,6 +289,10 @@
     userName = "Stephan Koglin-Fischer";
     userEmail = "stephan.koglin-fischer@funzt.dev";
   };
+  # programs.gh.enable = true;
+  # programs.gh-acy.enable = true; # Does not exists
+  # programs.gh-dash.enable = true;
+  programs.gitui.enable = true;
 
   programs.direnv.enable = true; # Enable direnv for project-specific envs
 
