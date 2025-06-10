@@ -101,14 +101,21 @@
   # --------------------------------------------------------------------------
   # Configure the mouse cursor theme for GTK applications.
   # ref: https://github.com/ful1e5/bibata
-  # home.pointerCursor = {
-  #   gtk.enable = true;
-  #   name = "Bibata-Modern-Classic";
-  #   package = pkgs.bibata-cursors;
-  #   size = 22;
-  # };
+  home.pointerCursor = {
+    gtk.enable = true;
+    name = "Bibata-Modern-Classic";
+    package = pkgs.bibata-cursors;
+    size = 22;
+  };
+
+  gtk.iconTheme = {
+    package = pkgs.papirus-icon-theme;
+    name = "Papirus-Dark";
+  };
+
   stylix.enable = false; # Enable Stylix for cursor theme management
   stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/eighties.yaml";
+  stylix.image = /home/stephan/Downloads/gnome-background.webp;
   stylix.cursor.name = "Bibata-Modern-Classic";
   stylix.cursor.package = pkgs.bibata-cursors;
   stylix.cursor.size = 22;
@@ -197,7 +204,7 @@
     pkgs.yubioath-flutter
 
     # Browsers
-    (config.lib.nixGL.wrap pkgs.google-chrome) # Chrome works only with the patched version of nixGL from https://github.com/nix-community/nixGL/pull/190
+    # (config.lib.nixGL.wrap pkgs.google-chrome) # Chrome works only with the patched version of nixGL from https://github.com/nix-community/nixGL/pull/190
     (config.lib.nixGL.wrap pkgs.firefox)
 
     # Media players and editors (OpenGL wrapped)
