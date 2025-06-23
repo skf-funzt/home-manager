@@ -96,11 +96,11 @@
   home.username = "stephan";
   home.homeDirectory = "/home/stephan";
 
-  # --------------------------------------------------------------------------
-  # Cursor Theme
-  # --------------------------------------------------------------------------
-  # Configure the mouse cursor theme for GTK applications.
-  # ref: https://github.com/ful1e5/bibata
+  # # --------------------------------------------------------------------------
+  # # Cursor Theme
+  # # --------------------------------------------------------------------------
+  # # Configure the mouse cursor theme for GTK applications.
+  # # ref: https://github.com/ful1e5/bibata
   home.pointerCursor = {
     gtk.enable = true;
     name = "Bibata-Modern-Classic";
@@ -108,14 +108,24 @@
     size = 22;
   };
 
+  # # --------------------------------------------------------------------------
+  # # GTK Configuration
+  # # --------------------------------------------------------------------------
+
   gtk.iconTheme = {
     package = pkgs.papirus-icon-theme;
     name = "Papirus-Dark";
   };
 
+  # --------------------------------------------------------------------------
+  # Stylix Configuration
+  # --------------------------------------------------------------------------
   stylix.enable = false; # Enable Stylix for cursor theme management
   stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/eighties.yaml";
-  stylix.image = /home/stephan/Downloads/gnome-background.webp;
+  stylix.image = pkgs.fetchurl {
+    url = "https://zebreus.github.io/all-gnome-backgrounds/images/keys-d-65e33e56cb91fc3b79d997399d2b660fbad42c84.webp";
+    hash = "sha256-2cGDxBwObirDJQ4bizAZPqak7xm0kuSaFL0QRw7uDlc=";
+  };
   stylix.cursor.name = "Bibata-Modern-Classic";
   stylix.cursor.package = pkgs.bibata-cursors;
   stylix.cursor.size = 22;
