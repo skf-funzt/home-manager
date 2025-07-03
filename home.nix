@@ -14,6 +14,8 @@
 {
   config,
   pkgs,
+  pkgs-unstable,
+  pkgs-22234d,
   nixgl,
   ...
 }: {
@@ -180,7 +182,7 @@
     pkgs.nil
     pkgs.nixd
     pkgs.alejandra
-    pkgs.devenv
+    pkgs-unstable.devenv
 
     # Fonts
     pkgs.fira-code
@@ -261,6 +263,9 @@
     #   version = "latest";
     #   buildInputs = oldAttrs.buildInputs ++ [ pkgs.krb5 ];
     # });
+
+    # CLI tools
+    pkgs.gemini-cli
 
     # Key Tools
     pkgs.infisical
