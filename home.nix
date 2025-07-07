@@ -250,7 +250,7 @@
     # pkgs.kompose
     # pkgs.podman # This is not supported on non-nixos systems and should be done using the systems package manager - ref: https://nixos.wiki/wiki/Docker#:~:text=for%20further%20options-,Running%20the%20docker%20daemon%20from%20nix%2Dthe%2Dpackage%2Dmanager%20%2D%20not%20NixOS,-This%20is%20not
     pkgs.podman-tui
-    pkgs.podman-desktop
+    pkgs-unstable.podman-desktop
 
     # Development tools
     pkgs.vscode
