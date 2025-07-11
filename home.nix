@@ -266,12 +266,14 @@
 
     # CLI tools
     pkgs.gemini-cli
+    pkgs.asdf-vm #! Should not be globally installed
 
     # Key Tools
     pkgs.infisical
 
     # Management Tools
     pkgs.logseq
+    pkgs.zotero
   ];
 
   # --------------------------------------------------------------------------
