@@ -114,9 +114,22 @@
   # # GTK Configuration
   # # --------------------------------------------------------------------------
 
-  gtk.iconTheme = {
-    package = pkgs.papirus-icon-theme;
-    name = "Papirus-Dark";
+  gtk = {
+    enable = true; # Enable GTK support
+    cursorTheme = {
+      name = "Bibata-Modern-Classic";
+      package = pkgs.bibata-cursors;
+      size = 22;
+    };
+    font = {
+      package = pkgs.noto-fonts;
+      name = "Noto Sans";
+      size = 10; # Default font size
+    };
+    iconTheme = {
+      package = pkgs.papirus-icon-theme;
+      name = "Papirus-Dark";
+    };
   };
 
   # --------------------------------------------------------------------------
