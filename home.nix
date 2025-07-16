@@ -266,7 +266,7 @@
     pkgs-unstable.podman-desktop
 
     # Development tools
-    pkgs.vscode
+    pkgs-unstable.vscode
     # See below for VSCode Insiders example
     # (pkgs.vscode.override { isInsiders = true; }).overrideAttrs (oldAttrs: rec {
     #   src = (builtins.fetchTarball {
