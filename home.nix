@@ -18,7 +18,12 @@
   pkgs-22234d,
   nixgl,
   ...
-}: {
+}: let
+  # Import custom wrapped packages
+  vscode-wrapped = import ./vscode.nix {
+    inherit pkgs pkgs-unstable;
+  };
+in {
   # --------------------------------------------------------------------------
   # Module Imports
   # --------------------------------------------------------------------------
@@ -266,7 +271,7 @@
     pkgs-unstable.podman-desktop
 
     # Development tools
-    pkgs-unstable.vscode
+    vscode-wrapped
     # See below for VSCode Insiders example
     # (pkgs.vscode.override { isInsiders = true; }).overrideAttrs (oldAttrs: rec {
     #   src = (builtins.fetchTarball {
@@ -306,10 +311,12 @@
   # --------------------------------------------------------------------------
   # Environment Variables
   # --------------------------------------------------------------------------
-  # Set environment variables for your user session here.
+  # This block is now added back in to handle the extension's environment
   home.sessionVariables = {
-    # Example: set default editor
-    # EDITOR = "emacs";
+    LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
+      pkgs.stdenv.cc.cc.lib # Provides libstdc++.so.6
+      pkgs.libuuid # Provides libuuid.so.1
+    ];
   };
 
   # --------------------------------------------------------------------------
@@ -338,3 +345,4 @@
     package = config.lib.nixGL.wrap pkgs.chromium; # Use the Chromium browser package
   }; # Enable Chromium browser
 }
+
