@@ -234,7 +234,7 @@ in {
     pkgs.yubioath-flutter
 
     # Browsers
-    # (config.lib.nixGL.wrap pkgs.google-chrome) # Chrome works only with the patched version of nixGL from https://github.com/nix-community/nixGL/pull/190
+    (config.lib.nixGL.wrap pkgs.google-chrome) # Chrome works only with the patched version of nixGL from https://github.com/nix-community/nixGL/pull/190
     (config.lib.nixGL.wrap pkgs.firefox)
 
     # Media players and editors (OpenGL wrapped)
