@@ -235,7 +235,7 @@ in {
 
     # Browsers
     # (config.lib.nixGL.wrap pkgs.google-chrome) # Chrome still crashes with nixGL active
-    pkgs.google-chrome
+    # pkgs.google-chrome
     (config.lib.nixGL.wrap pkgs.firefox)
 
     # Media players and editors (OpenGL wrapped)
