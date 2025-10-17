@@ -286,6 +286,7 @@ in {
     # CLI tools
     pkgs.gemini-cli
     pkgs.asdf-vm #! Should not be globally installed
+    pkgs.copilot-cli
 
     # Key Tools
     pkgs.infisical
