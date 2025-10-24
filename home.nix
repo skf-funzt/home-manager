@@ -286,7 +286,8 @@ in {
     # CLI tools
     pkgs.gemini-cli
     pkgs.asdf-vm #! Should not be globally installed
-    pkgs.copilot-cli
+    pkgs.github-copilot-cli # Currently GitHub Azure Web Auth does not work :(
+    pkgs.github-desktop
 
     # Key Tools
     pkgs.infisical
