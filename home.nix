@@ -15,7 +15,7 @@
   config,
   pkgs,
   pkgs-unstable,
-  pkgs-22234d,
+  pkgs-super-productivity-16-2-1,
   nixgl,
   ...
 }: let
@@ -23,6 +23,8 @@
   vscode-wrapped = import ./vscode.nix {
     inherit pkgs pkgs-unstable;
   };
+  # Use super-productivity from PR #458696 (16.2.1 update) - temporary workaround until merged
+  super-productivity-wrapped = pkgs-super-productivity-16-2-1.super-productivity;
 in {
   # --------------------------------------------------------------------------
   # Module Imports
@@ -295,6 +297,9 @@ in {
     # Management Tools
     pkgs.logseq
     pkgs.zotero
+
+    # Productivity Tools
+    super-productivity-wrapped
   ];
 
   # --------------------------------------------------------------------------
