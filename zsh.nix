@@ -157,11 +157,11 @@
       # bindkey '^[[1;5D' backward-word
 
       # # ASDF configuration (uncomment if you use asdf)
-      export PATH="${config.home.homeDirectory}/.asdf/shims:$PATH"
-      mkdir -p "${config.home.homeDirectory}/.asdf/completions"
-      if command -v asdf &> /dev/null; then
-        asdf completion zsh > "${config.home.homeDirectory}/.asdf/completions/_asdf"
-      fi
+      # export PATH="${config.home.homeDirectory}/.asdf/shims:$PATH"
+      # mkdir -p "${config.home.homeDirectory}/.asdf/completions"
+      # if command -v asdf &> /dev/null; then
+      #   asdf completion zsh > "${config.home.homeDirectory}/.asdf/completions/_asdf"
+      # fi
 
       # # Load ASDF Java home (uncomment if you use asdf-java)
       # if [ -f ${config.home.homeDirectory}/.asdf/plugins/java/set-java-home.zsh ]; then

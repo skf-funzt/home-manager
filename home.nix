@@ -287,9 +287,6 @@ in {
 
     # CLI tools
     pkgs.gemini-cli
-    # Removed `asdf` from the global sscope as it is interfering with `devenv`
-    # pkgs.asdf-vm #! Should not be globally installed.
-    pkgs.github-copilot-cli # Currently GitHub Azure Web Auth does not work :(
     pkgs.github-desktop
 
     # Key Tools
