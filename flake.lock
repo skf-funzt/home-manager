@@ -214,22 +214,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-super-productivity-16-2-1": {
-      "locked": {
-        "lastModified": 1762307576,
-        "narHash": "sha256-D9DEpLN9b78ws5YAq6elacxVZeQ52uPboYdq5Tiy264=",
-        "owner": "pineapplehunter",
-        "repo": "nixpkgs",
-        "rev": "c850869e00447456e55bf3dfa6fbb5947516bd3a",
-        "type": "github"
-      },
-      "original": {
-        "owner": "pineapplehunter",
-        "ref": "supprod",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "nixpkgs-unstable": {
       "locked": {
         "lastModified": 1770019141,
@@ -277,7 +261,6 @@
         "home-manager": "home-manager",
         "nixgl": "nixgl",
         "nixpkgs": "nixpkgs",
-        "nixpkgs-super-productivity-16-2-1": "nixpkgs-super-productivity-16-2-1",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "stylix": "stylix"
       }
