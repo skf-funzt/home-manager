@@ -27,6 +27,9 @@
           system = "x86_64-linux";
           config = {
             allowUnfree = true;
+            permittedInsecurePackages = [
+                "electron-37.10.3"
+            ];
           };
           overlays = [nixgl.overlay];
         };
@@ -41,6 +44,9 @@
             system = "x86_64-linux";
             config = {
               allowUnfree = true;
+              permittedInsecurePackages = [
+                "electron-37.10.3"
+              ];
             };
           };
         };
