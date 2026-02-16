@@ -1,11 +1,33 @@
-{ pkgs, lib, config, inputs, ... }:
-
+{
+  pkgs,
+  lib,
+  config,
+  inputs,
+  ...
+}:
 {
   # https://devenv.sh/basics/
   env.GREET = "devenv";
 
   # https://devenv.sh/packages/
-  packages = [ pkgs.git pkgs.github-copilot-cli pkgs.bashInteractive];
+  packages = [
+    # Git: version control system used for source management and CI checks.
+    pkgs.git
+
+    # opencode: project-specific CLI/tools used during development.
+    # Provides helper commands used in local workflows; replace or extend
+    # this with your project's preferred toolset if needed.
+    pkgs.opencode
+
+    # GitHub Copilot CLI: provides the `copilot` binary for AI-assisted
+    # coding in the terminal. Note: you must sign in (eg. `copilot auth
+    # login`) to use it.
+    pkgs.github-copilot-cli
+
+    # bashInteractive: a user-friendly interactive bash with completion
+    # and prompt improvements for a better shell UX while developing.
+    pkgs.bashInteractive
+  ];
 
   # https://devenv.sh/languages/
   # languages.rust.enable = true;

@@ -16,13 +16,17 @@
   pkgs,
   pkgs-unstable,
   nixgl,
+  handy,
+  nixvim,
   ...
-}: let
+}:
+let
   # Import custom wrapped packages
   vscode-wrapped = import ./vscode.nix {
     inherit pkgs pkgs-unstable;
   };
-in {
+in
+{
   # --------------------------------------------------------------------------
   # Module Imports
   # --------------------------------------------------------------------------
@@ -30,6 +34,7 @@ in {
   # aspect of your environment (e.g., zsh, neovim, etc.).
   imports = [
     ./zsh.nix # Zsh shell configuration (see zsh.nix)
+    ./nixvim.nix # Nixvim configuration (see nixvim.nix)
     # currently not working
     # Add more modules here as needed
   ];
@@ -80,7 +85,7 @@ in {
   # Enable support for generic Linux and XDG (desktop integration) features.
   targets.genericLinux.enable = true;
   xdg.mime.enable = true;
-  xdg.systemDirs.data = ["${config.home.homeDirectory}/.nix-profile/share/applications"];
+  xdg.systemDirs.data = [ "${config.home.homeDirectory}/.nix-profile/share/applications" ];
 
   # --------------------------------------------------------------------------
   # (Optional) Activation Hooks
@@ -258,6 +263,9 @@ in {
     pkgs.discord
     pkgs.ferdium
 
+    # Speech-to-text
+    handy.packages.x86_64-linux.handy
+
     # Virtualization
     pkgs.virtualbox
     # pkgs.vagrant
@@ -348,4 +356,3 @@ in {
     package = config.lib.nixGL.wrap pkgs.chromium; # Use the Chromium browser package
   }; # Enable Chromium browser
 }
-
