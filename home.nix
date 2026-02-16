@@ -25,6 +25,9 @@ let
   vscode-wrapped = import ./vscode.nix {
     inherit pkgs pkgs-unstable;
   };
+  handy-wrapped = import ./handy-wrapped.nix {
+    inherit pkgs handy;
+  };
 in
 {
   # --------------------------------------------------------------------------
@@ -264,7 +267,7 @@ in
     pkgs.ferdium
 
     # Speech-to-text
-    handy.packages.x86_64-linux.handy
+    handy-wrapped
 
     # Virtualization
     pkgs.virtualbox
