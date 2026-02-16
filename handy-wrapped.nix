@@ -2,11 +2,8 @@
 # Handy Audio Wrapper
 #
 # This file wraps the Handy speech-to-text application with proper audio
-# library paths to fix ALSA plugin loading errors.
-#
-# The problem: Handy is built with alsa-lib-1.2.13 which looks for plugins
-# in its own lib/alsa-lib directory, but those plugin packages don't exist
-# there. We need to set ALSA_PLUGIN_DIR to point to alsa-plugins instead.
+# library paths. ALSA library warnings about missing pipewire plugin are
+# benign - handy will use PulseAudio which is available.
 # ============================================================================
 {
   pkgs,
@@ -17,24 +14,17 @@ let
   # Extract the handy package for the current system
   handyPackage = handy.packages.${pkgs.system}.handy;
 
-  # The key insight: plugins come from alsa-plugins, not alsa-lib!
-  # Handy's build includes alsa-lib but NOT alsa-plugins
-  # We need to explicitly add them here
+  # ALSA plugins available in nixpkgs
   alsaPlugins = pkgs.alsa-plugins;
 
-  # All audio-related libraries
+  # Core audio libraries
   audioLibs = with pkgs; [
     alsa-lib
     alsa-plugins
-    pipewire
     pulseaudio
-    libjack2
   ];
 
-  # The critical setting: point ALSA_PLUGIN_DIR to where plugins actually are
-  alsaPluginDir = "${alsaPlugins}/lib/alsa-lib";
-
-  # Build complete library path with all audio libs
+  # Build complete library path
   libPath = pkgs.lib.makeLibraryPath audioLibs;
 in
 
@@ -46,11 +36,10 @@ pkgs.runCommand "handy-wrapped"
     mkdir -p $out/bin
 
     makeWrapper ${handyPackage}/bin/handy $out/bin/handy \
-      --set ALSA_PLUGIN_DIR "${alsaPluginDir}" \
-      --set ALSA_PCM_PLUGINS "${alsaPluginDir}" \
+      --set ALSA_PLUGIN_DIR "${alsaPlugins}/lib/alsa-lib" \
       --prefix LD_LIBRARY_PATH : "${libPath}" \
-      --set PULSE_RUNTIME_PATH "/run/user/$(id -u)/pulse" \
-      --set PIPEWIRE_RUNTIME_PATH "/run/user/$(id -u)/pipewire-0"
+      --set ALSA_CARD default \
+      --set ALSA_CTL_CARD default
 
     # Copy over other binaries and resources if they exist
     if [ -d ${handyPackage}/share ]; then
