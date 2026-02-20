@@ -184,11 +184,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1770943285,
-        "narHash": "sha256-p89OyRpIJ+CnSJ7CxLNPFV/NHcX/NOyq6skh5LgmUSc=",
+        "lastModified": 1771565125,
+        "narHash": "sha256-t9OcWGwR9Z5xcPVr6d0KY4ARGxKUhr/h26IQclcoVyU=",
         "owner": "cjpais",
         "repo": "Handy",
-        "rev": "3b88717091a1c965ce96ab7e7f7d4629c1c9f258",
+        "rev": "74951cfca407e06222b2a26bdd7f15789800ade3",
         "type": "github"
       },
       "original": {
@@ -257,11 +257,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1771008912,
-        "narHash": "sha256-gf2AmWVTs8lEq7z/3ZAsgnZDhWIckkb+ZnAo5RzSxJg=",
+        "lastModified": 1771369470,
+        "narHash": "sha256-0NBlEBKkN3lufyvFegY4TYv5mCNHbi5OmBDrzihbBMQ=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "a82ccc39b39b621151d6732718e3e250109076fa",
+        "rev": "0182a361324364ae3f436a63005877674cf45efb",
         "type": "github"
       },
       "original": {
