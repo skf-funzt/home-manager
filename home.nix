@@ -296,8 +296,8 @@ in
     # CLI tools
     pkgs.gemini-cli
     pkgs.github-desktop
-    pkgs.opencode
-    pkgs.github-copilot-cli
+    pkgs-unstable.opencode
+    pkgs-unstable.github-copilot-cli
     pkgs.bashInteractive
 
     # Key Tools
