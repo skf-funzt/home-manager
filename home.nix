@@ -72,15 +72,15 @@ in
   # --------------------------------------------------------------------------
   # These options help run graphical programs with the correct OpenGL drivers
   # on non-NixOS systems. Only needed if you use GPU-accelerated apps via Nix.
-  nixGL.packages = nixgl.packages;
-  nixGL.defaultWrapper = "mesa";
-  # nixGL.offloadWrapper = "mesaPrime";
-  nixGL.installScripts = [
+  targets.genericLinux.nixGL.packages = nixgl.packages;
+  targets.genericLinux.nixGL.defaultWrapper = "mesa";
+  # targets.genericLinux.nixGL.offloadWrapper = "mesaPrime";
+  targets.genericLinux.nixGL.installScripts = [
     "mesa"
     # "mesaPrime"
   ];
   # ! This setting breaks Gnome 46 completely for X and Wayland
-  # nixGL.vulkan.enable = true;
+  # targets.genericLinux.nixGL.vulkan.enable = true;
 
   # --------------------------------------------------------------------------
   # XDG and Linux Target Settings
@@ -347,8 +347,12 @@ in
   # Git configuration
   programs.git = {
     enable = true;
-    userName = "Stephan Koglin-Fischer";
-    userEmail = "stephan.koglin-fischer@funzt.dev";
+    settings = {
+      user = {
+        name = "Stephan Koglin-Fischer";
+        email = "stephan.koglin-fischer@funzt.dev";
+      };
+    };
   };
   # programs.gh.enable = true;
   # programs.gh-acy.enable = true; # Does not exists

@@ -38,7 +38,7 @@
     # Shell Options
     # -------------------
     autocd = true; # Change directory by typing its name
-    dotDir = ".config/zsh"; # Where Zsh stores its config files
+    dotDir = "${config.home.homeDirectory}/.config/zsh"; # Where Zsh stores its config files - use config.home.homeDirectory
 
     # -------------------
     # Plugin Management
@@ -53,8 +53,8 @@
     # Shell Aliases
     # -------------------
     shellAliases = {
-      adhu = "~/Android/Sdk/extras/google/auto/desktop-head-unit"; # Example alias
-      reload = "source ~/.zshrc && zsh"; # Reload Zsh config
+      adhu = "${config.home.homeDirectory}/Android/Sdk/extras/google/auto/desktop-head-unit"; # Example alias
+      reload = "source ${config.home.homeDirectory}/.zshrc && zsh"; # Reload Zsh config
     };
 
     # -------------------
