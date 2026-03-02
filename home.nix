@@ -194,7 +194,7 @@ in
   # --------------------------------------------------------------------------
   # This value should match the Home Manager release you started with.
   # Only change after reading the release notes!
-  home.stateVersion = "25.05";
+  home.stateVersion = "25.11";
 
   # --------------------------------------------------------------------------
   # Packages
@@ -237,7 +237,7 @@ in
     pkgs.zoom
 
     # Security tools
-    # pkgs.yubikey-manager-qt  # Deprecated after NixOS 25.05
+    # pkgs.yubikey-manager-qt  # Deprecated after NixOS 25.11
     pkgs.yubioath-flutter
 
     # Browsers
@@ -267,7 +267,7 @@ in
     pkgs.ferdium
 
     # Speech-to-text
-    handy-wrapped
+    # handy-wrapped
 
     # Virtualization
     pkgs.virtualbox
