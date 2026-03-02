@@ -186,11 +186,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1772377533,
-        "narHash": "sha256-YHa4auuvkON3l7686WIQtmAD/sD/V4lJyFZLOcfRWLI=",
+        "lastModified": 1772437082,
+        "narHash": "sha256-yUKFNqI0pl93LNdVw607SWlSv5JRoq/rFn1XgvklnYA=",
         "owner": "cjpais",
         "repo": "Handy",
-        "rev": "998449d2adad4729df2c47f920399c846698ced0",
+        "rev": "a6b5c32cdbc2c8888fe1d827eff8daa7b792eb69",
         "type": "github"
       },
       "original": {
