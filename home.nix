@@ -40,6 +40,7 @@ in
     ./nixvim.nix # Nixvim configuration (see nixvim.nix)
     # currently not working
     # Add more modules here as needed
+    ./opencode-custom.nix # The custom opencode package override module (see opencode-custom.nix)
   ];
 
   # --------------------------------------------------------------------------
