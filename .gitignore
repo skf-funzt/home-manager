@@ -9,3 +9,6 @@ devenv.local.yaml
 # pre-commit
 .pre-commit-config.yaml
 ~
+result
+.memsearch/.capture.pid
+.memsearch/.last_msg_time
