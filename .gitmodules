@@ -1,3 +1,6 @@
 [submodule "opencode"]
 	path = opencode
 	url = ./opencode/
+[submodule "khanelivim"]
+	path = khanelivim
+	url = https://github.com/khaneliman/khanelivim.git

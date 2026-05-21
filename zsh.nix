@@ -14,7 +14,8 @@
   pkgs,
   lib,
   ...
-}: {
+}:
+{
   # --------------------------------------------------------------------------
   # Zsh Program Settings
   # --------------------------------------------------------------------------
@@ -133,6 +134,9 @@
 
       # # Flutter Chrome executable path
       # export CHROME_EXECUTABLE=/usr/bin/google-chrome-stable
+
+      # OpenCode editor
+      export EDITOR=nvim
     '';
 
     # -------------------
@@ -202,11 +206,9 @@
     # https://starship.rs/installing/#nix
     #
     #
-    settings =
-      lib.mkForce
-      (builtins.fromTOML (
-        builtins.readFile "${pkgs.starship}/share/starship/presets/gruvbox-rainbow.toml"
-      ));
+    settings = lib.mkForce (
+      builtins.fromTOML (builtins.readFile "${pkgs.starship}/share/starship/presets/gruvbox-rainbow.toml")
+    );
   };
 
   programs.zoxide = {

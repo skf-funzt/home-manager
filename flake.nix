@@ -36,6 +36,12 @@
       # on a binary cache.
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Noctalia shell
+    noctalia = {
+      url = "github:noctalia-dev/noctalia-shell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs =
     {
@@ -104,6 +110,7 @@
             nixvim.homeModules.nixvim
             nvf.homeManagerModules.default
             ./home.nix
+            ./noctalia.nix
           ];
           extraSpecialArgs = {
             inherit

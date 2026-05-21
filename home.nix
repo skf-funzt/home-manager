@@ -326,6 +326,7 @@ in
     pkgs-unstable.opencode # Currently using a custom version of opencode with config reloading support, see opencode-pr input
     pkgs-unstable.github-copilot-cli
     pkgs.bashInteractive
+    pkgs.byobu
 
     # Key Tools
     pkgs.infisical
@@ -419,6 +420,27 @@ in
   programs.home-manager.enable = true; # Allow Home Manager to manage itself
   programs.nh.enable = true; # Enable nh (Nix Home) utility
   # programs.vscode.enable = true; # Enable Visual Studio Code
+
+  programs.tmux = {
+    enable = true;
+    keyMode = "vi";
+    mouse = true;
+    clock24 = true;
+    plugins = with pkgs; [
+      tmuxPlugins.cpu
+      {
+        plugin = tmuxPlugins.resurrect;
+        extraConfig = "set -g @resurrect-strategy-nvim 'session'";
+      }
+      {
+        plugin = tmuxPlugins.continuum;
+        extraConfig = ''
+          set -g @continuum-restore 'on'
+          set -g @continuum-save-interval '60' # minutes
+        '';
+      }
+    ];
+  };
 
   # Git configuration
   programs.git = {
