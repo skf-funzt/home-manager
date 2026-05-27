@@ -1,10 +1,10 @@
 {
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     # nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    home-manager.url = "github:nix-community/home-manager/release-25.11";
+    home-manager.url = "github:nix-community/home-manager/release-26.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     nixgl.url = "github:nix-community/nixGL";
@@ -22,7 +22,7 @@
 
     khanelivim = {
       url = "github:khaneliman/khanelivim";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # Custom opencode with config reloading (path: makes it portable across machines)
@@ -54,6 +54,7 @@
       nixvim,
       khanelivim,
       nvf,
+      noctalia,
       ...
     }@inputs:
     let
@@ -110,7 +111,6 @@
             nixvim.homeModules.nixvim
             nvf.homeManagerModules.default
             ./home.nix
-            ./noctalia.nix
           ];
           extraSpecialArgs = {
             inherit
@@ -121,6 +121,7 @@
               nixvim
               khanelivim
               gpuType
+              noctalia
               ;
           };
         };

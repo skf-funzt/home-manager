@@ -60,6 +60,7 @@ in
     # currently not working
     # Add more modules here as needed
     # ./opencode-custom.nix # The custom opencode package override module (see opencode-custom.nix)
+    inputs.noctalia.homeModules.default
   ];
 
   # --------------------------------------------------------------------------
@@ -176,7 +177,7 @@ in
   stylix.cursor.name = "Bibata-Modern-Classic";
   stylix.cursor.package = pkgs.bibata-cursors;
   stylix.cursor.size = 22;
-  stylix.iconTheme = {
+  stylix.icons = {
     enable = true;
     package = pkgs.papirus-icon-theme;
     light = "Papirus-Light";
@@ -214,7 +215,7 @@ in
   # --------------------------------------------------------------------------
   # This value should match the Home Manager release you started with.
   # Only change after reading the release notes!
-  home.stateVersion = "25.11";
+  home.stateVersion = "26.05";
 
   # --------------------------------------------------------------------------
   # Packages
@@ -325,6 +326,7 @@ in
     pkgs.github-desktop
     pkgs-unstable.opencode # Currently using a custom version of opencode with config reloading support, see opencode-pr input
     pkgs-unstable.github-copilot-cli
+    pkgs-unstable.pi-coding-agent
     pkgs.bashInteractive
     pkgs.byobu
 
@@ -463,6 +465,63 @@ in
     enable = true;
     package = config.lib.nixGL.wrap pkgs.chromium; # Use the Chromium browser package
   }; # Enable Chromium browser
+
+  programs.noctalia-shell = {
+    enable = true;
+    settings = {
+      # configure noctalia here
+      bar = {
+        density = "compact";
+        position = "right";
+        showCapsule = false;
+        widgets = {
+          left = [
+            {
+              id = "ControlCenter";
+              useDistroLogo = true;
+            }
+            {
+              id = "Network";
+            }
+            {
+              id = "Bluetooth";
+            }
+          ];
+          center = [
+            {
+              hideUnoccupied = false;
+              id = "Workspace";
+              labelMode = "none";
+            }
+          ];
+          right = [
+            {
+              alwaysShowPercentage = false;
+              id = "Battery";
+              warningThreshold = 30;
+            }
+            {
+              formatHorizontal = "HH:mm";
+              formatVertical = "HH mm";
+              id = "Clock";
+              useMonospacedFont = true;
+              usePrimaryColor = true;
+            }
+          ];
+        };
+      };
+      colorSchemes.predefinedScheme = "Monochrome";
+      general = {
+        avatarImage = "/home/drfoobar/.face";
+        radiusRatio = 0.2;
+      };
+      location = {
+        monthBeforeDay = true;
+        name = "Marseille, France";
+      };
+    };
+    # this may also be a string or a path to a JSON file.
+  };
 
   # Later... maybe
   # nvf
