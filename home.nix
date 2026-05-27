@@ -245,6 +245,7 @@ in
 
     # Terminal emulator
     (config.lib.nixGL.wrap pkgs.alacritty)
+    (config.lib.nixGL.wrap pkgs.kitty)
 
     # System tools
     pkgs.tldr
